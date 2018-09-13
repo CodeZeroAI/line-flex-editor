@@ -1,0 +1,45 @@
+body{
+    line-height: 1.4;
+    color: #444;
+    font-family: -apple-system, 'BlinkMacSystemFont', Helvetica, Roboto, Sans-Serif;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -webkit-text-size-adjust: none;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: normal;
+    font-style: normal;
+    list-style: none;
+}
+.flex-editor-container{
+    height:100vh;
+    /*background-color: #f4f6f9;*/
+    background-color: lightgrey;
+    padding: 20px;
+}
+.flex-bubble-container{
+    width: 281px;
+    height: auto;
+    background: white;
+    border-radius: 17px;
+}
+.flex-header-block{
+    padding: 20px 20px 20px 20px;
+    display: inherit;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+}
+.flex-text-component{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.flex-image-component{
+    background: no-repeat 50% 50%;
+}
