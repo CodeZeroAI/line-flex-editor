@@ -12,6 +12,7 @@ export type Height = 'sm'|'md'
 export type ButtonStyle = 'link'|'primary'|'secondary'
 export type Gravity = 'top'|'bottom'|'center'
 export type Layout = 'horizontal' | 'vertical' | 'baseline'
+export type ComponentType = 'box'|'button'|'text'|'image'|'icon'|'filler'|'spacer'|'separator'
 export interface BoxComponentJson extends BaseComponentJson{
     type: 'box'
     layout: Layout

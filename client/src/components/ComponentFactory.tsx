@@ -10,11 +10,11 @@ import {SeparatorComponent} from "./SeparatorComponent";
 import {SpacerComponent} from "./SpacerComponent";
 
 export class ComponentFactory{
-    public static createComponent(json: ContentJson, width:number) : JSX.Element{
-        if(json.type == 'box') return <BoxComponent json={json} width={width}/>;
-        if(json.type == 'button') return <ButtonComponent json={json}/>;
-        if(json.type == 'image') return <ImageComponent json={json} width={width}/>;
-        if(json.type == 'text') return <TextComponent json={json}/>;
+    public static createComponent(json: ContentJson, width:number | 'auto', height: number | 'auto') : JSX.Element{
+        if(json.type == 'box') return <BoxComponent json={json} width={width} height={height}/>;
+        if(json.type == 'button') return <ButtonComponent json={json} width={width} height={height}/>;
+        if(json.type == 'image') return <ImageComponent json={json} width={width} height={height}/>;
+        if(json.type == 'text') return <TextComponent json={json} width={width} height={height}/>;
         if(json.type == 'icon') return <IconComponent json={json}/>;
         if(json.type == 'filler') return <FillerComponent json={json}/>;
         if(json.type == 'separator') return <SeparatorComponent json={json}/>;

@@ -6,8 +6,11 @@ export class IconComponent extends React.Component<{json: IconComponentJson}, {}
     }
     render() {
         return (
-            <div className={`flex-icon-component`}>
-                {this.props.json.url}
+            <div className={`flex-icon-component
+                            flex-text-size-${this.props.json.size}`}>
+                <span style = {{
+                    "backgroundImage": `url('${this.props.json.url}')`
+                }} ></span>
             </div>
         );
     }

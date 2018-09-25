@@ -6,8 +6,7 @@ export class SpacerComponent extends React.Component<{json: SpacerComponentJson}
     }
     render() {
         return (
-            <div className={`flex-spacer-component`}>
-                SPACER
+            <div className={`flex-spacer-component flex-spacer-${this.props.json.size}`}>
             </div>
         );
     }

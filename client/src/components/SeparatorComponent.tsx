@@ -7,7 +7,6 @@ export class SeparatorComponent extends React.Component<{json: SeparatorComponen
     render() {
         return (
             <div className={`flex-separator-component`}>
-                SEPARATOR
             </div>
         );
     }
