@@ -1,0 +1,107 @@
+.tippy-tooltip.flex-tooltip-theme{
+    border: 1px solid #8f8f8f59;
+    color: #5E5E5E;
+    background: #fffffff5;
+    pointer-events: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 18px 0 rgba(22, 45, 61, 0.27);
+}
+.flex-tooltip-theme .tippy-backdrop {
+    background-color: white;
+    font-weight: bold;
+}
+
+.flex-tooltip-theme .tippy-arrow{
+    left: -8px !important;
+}
+.flex-tooltip .tippy-content{
+
+}
+.flex-tooltip-container{
+    width: 100%;
+    padding: 0;
+}
+.flex-tooltip-header{
+    border-bottom: 1px solid #8f8f8f59;
+    padding: 0 20px;
+}
+.flex-tooltip-header>h6{
+    font-size: 13px;
+    color: #5e5e5e;
+    font-weight: bold;
+    min-width: 200px;
+    text-transform: capitalize;
+}
+.flex-tooltip-theme .tippy-arrow{
+    border-right: 8px solid #8f8f8fc2;
+}
+
+.flex-tooltip-body{
+    padding: 0;
+
+}
+.flex-tooltip-text-input{
+    border: 1px solid #8f8f8f59;
+    width: 100%;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0F806A;
+}
+.flex-tooltip-label{
+    font-size: 12px;
+    font-weight: 700;
+    color: #8a8a8a;
+    width: 100%;
+    text-align: left;
+    padding: 0 7px;
+    margin-bottom: 2px;
+}
+.flex-tooltip-section{
+    padding: 10px 5px;
+    text-align: left;
+}
+.flex-tooltip-section>.flex-tooltip-section-halfcol{
+    width:40%;
+}
+.flex-tooltip-section{
+    border-bottom: 1px solid #8f8f8f59;
+}
+div:last-child>.flex-tooltip-section:last-child{
+    border-bottom: none !important;
+}
+.flex-tooltip-entry{
+    width:100%;
+    text-align: left;
+    color: #0F806A;
+    vertical-align: top;
+}
+.flex-tooltip-selector{
+    /*width: 100%;*/
+}
+.flex-tooltip-selector>button{
+    width: 100%;
+    text-align: left;
+    border: 1px solid #8f8f8f59;
+    padding: 5px 17px;
+}
+.flex-tooltip-dropdown-caret{
+    float: right;
+    margin-top: 2px;
+}
+.flex-tootip-toggle{
+    margin-right: 5px;
+    height: 40px;
+    border: 1px solid #8f8f8f59;
+    color: #8a8a8a;
+}
+.flex-tootip-toggle.toggle-active{
+    color:#009688;
+    border-color: #009688;
+}
+.flex-tooltip-input-color{
+    width: 50px;
+    height: 41px;
+    margin-right: 5px;
+}

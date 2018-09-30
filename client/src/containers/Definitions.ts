@@ -1,4 +1,4 @@
-import {BoxComponentJson, ImageComponentJson} from "../components/Definitions";
+import {BaseComponentJson, BoxComponentJson, ImageComponentJson} from "../components/Definitions";
 
 export interface BlockJson{
    header?: BoxComponentJson
@@ -6,7 +6,7 @@ export interface BlockJson{
    body?: BoxComponentJson
    footer: BoxComponentJson
 }
-export interface CarouselContainerJson{
+export interface CarouselContainerJson extends BaseComponentJson{
     type:'carousel'
     contents: BubbleContainerJson[]
 }
@@ -22,7 +22,7 @@ export interface BubbleStyleJson{
     footer: BlockStyleJson
 }
 export interface BlockStyleJson{
-    backgroundColor: string
-    separator: boolean
-    separatorColor: string
+    backgroundColor?: string
+    separator?: boolean
+    separatorColor?: string
 }

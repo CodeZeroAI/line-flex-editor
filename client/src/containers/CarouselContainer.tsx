@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {CarouselContainerJson} from "./Definitions";
 import {BubbleContainer} from "./BubbleContainer";
+import {BaseComponent} from "../components/BaseComponent";
 
-export class CarouselContainer extends React.Component<{ json: CarouselContainerJson }, {}> {
-    private needResize = true;
+export class CarouselContainer extends BaseComponent<CarouselContainerJson> {
     private maxHeight = 0;
 
     constructor(props: any) {
@@ -12,9 +12,9 @@ export class CarouselContainer extends React.Component<{ json: CarouselContainer
 
     private resizeAndUpdate() {
         const self = this;
-        $(`#carousel-container`).children('.flex-bubble-container').each(function(){
+        $(`#${this.id}`).find('.flex-bubble-container').each(function(){
             let bubbleHeight = 0;
-            $(this).children('.flex-block').each(function(){
+            $(this).find('.flex-block').each(function(){
                 bubbleHeight += $(this).outerHeight() || 0;
             });
             self.maxHeight = Math.max(bubbleHeight, self.maxHeight)
@@ -24,6 +24,7 @@ export class CarouselContainer extends React.Component<{ json: CarouselContainer
     }
 
     componentDidMount() {
+        super.componentDidMount();
         this.componentDidRender();
     }
 
@@ -42,9 +43,10 @@ export class CarouselContainer extends React.Component<{ json: CarouselContainer
         })
     };
 
-    render() {
+    renderComponent() {
+        if(this.needResize) this.maxHeight = 0;
         return (
-            <div id={'carousel-container'} className={`flex-carousel-container`}>
+            <div id = {this.id}  className={`flex-carousel-container`}>
                     {this.generateBubbles()}
             </div>
         );

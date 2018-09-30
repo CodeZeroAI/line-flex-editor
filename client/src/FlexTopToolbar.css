@@ -1,0 +1,11 @@
+.flex-editor-top-nav{
+    height: 60px;
+    border-bottom: 2px solid #cccccc;
+    background: #eeeeee;
+    margin: -20px -20px 20px;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 20px;
+}

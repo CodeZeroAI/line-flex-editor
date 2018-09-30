@@ -1,12 +1,16 @@
 import * as React from 'react';
 import {FillerComponentJson} from "./Definitions";
-export class FillerComponent extends React.Component<{json: FillerComponentJson}, {}> {
+import {BaseComponent} from "./BaseComponent";
+export class FillerComponent extends BaseComponent<FillerComponentJson> {
     constructor(props:any){
         super(props);
     }
-    render() {
+    protected renderEditor(): JSX.Element | null {
+        return null;
+    }
+    renderComponent() {
         return (
-            <div className={`flex-filler-component`}>
+            <div id = {this.id}  className={`flex-component flex-filler-component`}>
                 FILLER
             </div>
         );
