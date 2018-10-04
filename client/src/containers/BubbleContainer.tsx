@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BubbleContainerJson} from "./Definitions";
+import {BlockStyleJson, BubbleContainerJson} from "./Definitions";
 import {BoxComponent} from "../components/BoxComponent";
 import {ImageComponent} from "../components/ImageComponent";
 import {BaseComponent} from "../components/BaseComponent";
@@ -8,6 +8,7 @@ import {BlockStyleEditor} from "../editors/BlockStyleEditor";
 export class BubbleContainer extends BaseComponent<BubbleContainerJson> {
     constructor(props: any) {
         super(props);
+        this.ensureStyleJsons(this.props.json);
     }
 
     private getNonBodyHeight() {
@@ -19,6 +20,16 @@ export class BubbleContainer extends BaseComponent<BubbleContainerJson> {
         return h;
     }
 
+    componentWillReceiveProps(props: {json: BubbleContainerJson}) {
+        this.ensureStyleJsons(props.json);
+    }
+    private ensureStyleJsons = (json: BubbleContainerJson)=>{
+        if (!json.styles) json.styles = {};
+        if(!json.styles.header) json.styles.header = {};
+        if(!json.styles.hero) json.styles.hero = {};
+        if(!json.styles.body) json.styles.body = {};
+        if(!json.styles.footer) json.styles.footer = {};
+    };
     private calculateBodyHeight() {
         if (this.props.height == 'auto' || this.needResize) return 'auto';
         const h = (this.props.height - this.getNonBodyHeight());
@@ -39,12 +50,13 @@ export class BubbleContainer extends BaseComponent<BubbleContainerJson> {
     }
 
     private getBlockStyleComponent = (type: 'header' | 'hero' | 'body' | 'footer') => {
-        return this.props.json.styles[type] ? <BlockStyleEditor json={this.props.json.styles[type]} prefix={type}
-                                                                onJsonChanged={this.onJsonChanged}/> : null;
+        return (this.props.json[type]) ? <BlockStyleEditor json={this.props.json.styles[type] as BlockStyleJson}
+                                                           prefix={type.substring(0,1).toUpperCase()+type.substring(1)}
+                                                           onJsonChanged={this.onJsonChanged}/> : null;
     };
     private getBlockStyleCss = (type: 'header' | 'hero' | 'body' | 'footer') => {
-        if (!this.props.json.styles[type]) return {};
-        const styleJson = this.props.json.styles[type];
+        if (!this.props.json.styles || !this.props.json.styles[type]) return {};
+        const styleJson = this.props.json.styles[type] || {};
         return {
             background: styleJson.backgroundColor || 'none',
             borderTop: styleJson.separator ? `solid 1px ${styleJson.separatorColor || '#D4D6DA'}` : 'none',
@@ -66,18 +78,18 @@ export class BubbleContainer extends BaseComponent<BubbleContainerJson> {
             }}>
                 {this.props.json.header ? (
                     <div className={`flex-header-block flex-block ${hasClass}`} style={this.getBlockStyleCss('header')}>
-                        <BoxComponent json={this.props.json.header} width={width - 40} height='auto'/>
+                        <BoxComponent json={this.props.json.header} width={width - 40} height='auto' parentContainer={this}/>
                     </div>) : null}
                 {this.props.json.hero ?
                     <div className={`flex-hero-block flex-block ${hasClass}`} style={this.getBlockStyleCss('hero')}>
-                        <ImageComponent json={this.props.json.hero} width={width} height='auto'/></div> : null}
+                        <ImageComponent json={this.props.json.hero} width={width} height='auto' parentContainer={this}/></div> : null}
                 {this.props.json.body ?
                     <div className={`flex-body-block flex-block ${hasClass}`} style={this.getBlockStyleCss('body')}>
                         <BoxComponent json={this.props.json.body} width={width - 40}
-                                      height={this.calculateBodyHeight()}/></div> : null}
+                                      height={this.calculateBodyHeight()} parentContainer={this}/></div> : null}
                 {this.props.json.footer ?
                     <div className={`flex-footer-block flex-block ${hasClass}`} style={this.getBlockStyleCss('footer')}>
-                        <BoxComponent json={this.props.json.footer} width={width - 20} height='auto'/></div> : null}
+                        <BoxComponent json={this.props.json.footer} width={width - 20} height='auto' parentContainer={this}/></div> : null}
             </div>
         );
     }

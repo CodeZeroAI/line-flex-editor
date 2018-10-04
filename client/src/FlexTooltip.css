@@ -105,3 +105,13 @@ div:last-child>.flex-tooltip-section:last-child{
     height: 41px;
     margin-right: 5px;
 }
+.flex-tooltip-delete{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.flex-tooltip-select-parent{
+    position: absolute;
+    left: 0;
+    top: 0;
+}

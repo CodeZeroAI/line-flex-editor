@@ -16,10 +16,10 @@ export interface BubbleContainerJson extends BlockJson{
     styles: BubbleStyleJson
 }
 export interface BubbleStyleJson{
-    header: BlockStyleJson
-    hero: BlockStyleJson
-    body: BlockStyleJson
-    footer: BlockStyleJson
+    header?: BlockStyleJson
+    hero?: BlockStyleJson
+    body?: BlockStyleJson
+    footer?: BlockStyleJson
 }
 export interface BlockStyleJson{
     backgroundColor?: string

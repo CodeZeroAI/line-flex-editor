@@ -42,11 +42,11 @@ export class FlexTopToolbar extends React.Component<{ json: BubbleContainerJson 
                 this.props.json.styles[part] = this.previousStyle[part] as BlockStyleJson;
             }
             else if (part == 'hero') {
-                this.props.json['hero'] = ComponentManager.getDefaultImageComponentJson();
+                this.props.json['hero'] = ComponentManager.ComponentDefaultDefinitions.image as ImageComponentJson;
                 this.props.json.styles['hero'] = {}
             }
             else {
-                this.props.json[part] = ComponentManager.getDefaultBoxComponentJson('vertical');
+                this.props.json[part] = ComponentManager.ComponentDefaultDefinitions.box as BoxComponentJson;
                 this.props.json.styles[part] = {}
             }
             FlexEditor.getInstance().onJsonChanged();

@@ -1,9 +1,13 @@
 import * as React from 'react';
-import {BoxComponentJson, ElementalComponentJson, Layout} from "./Definitions";
+import {BoxComponentJson, ComponentType, ElementalComponentJson, Layout} from "./Definitions";
 import {ComponentFactory} from "./ComponentFactory";
 import {Constant, Utils} from "../Utils";
 import {BaseComponent} from "./BaseComponent";
 import {DropdownSelector} from "../editors/DropdownSelector";
+import {ComponentManager} from "../controllers/ComponentManager";
+import {FlexEditor} from "../FlexEditor";
+import {CarouselContainer} from "../containers/CarouselContainer";
+import {BubbleContainer} from "../containers/BubbleContainer";
 
 export class BoxComponent extends BaseComponent<BoxComponentJson> {
     public static readonly BOX_LAYOUT_DROPDOWN = [
@@ -22,7 +26,7 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
                     <div className={'flex-tooltip-entry'}>
                         <DropdownSelector
                             options={BoxComponent.BOX_LAYOUT_DROPDOWN}
-                            defaultValue={this.props.json.margin || 'md'}
+                            defaultValue={this.props.json.layout || 'md'}
                             onChange={this.onLayoutChanged}
                         />
                     </div>
@@ -32,7 +36,7 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
                     <div className={'flex-tooltip-entry'}>
                         <DropdownSelector
                             options={BoxComponent.BOX_SPACING_DROPDOWN}
-                            defaultValue={this.props.json.margin || 'none'}
+                            defaultValue={this.props.json.spacing || 'none'}
                             onChange={this.onLayoutChanged}
                         />
                     </div>
@@ -84,7 +88,7 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
     };
 
     componentWillReceiveProps(nextProps: { json: BoxComponentJson, width: number | 'auto', height: number | 'auto' }) {
-        if (JSON.stringify(this.props) != JSON.stringify(nextProps)) this.needResize = true;
+        if (JSON.stringify(this.props.json) != JSON.stringify(nextProps.json)) this.needResize = true;
     }
 
     private resizeAndUpdateWidth() {
@@ -98,6 +102,18 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
         }
     }
 
+    /**
+     * Get level of depth within the flex json content the component reside in
+     */
+    public getComponentDepth(){
+        let depth = 0;
+        let parent = this.props.parentContainer;
+        while(!(parent instanceof FlexEditor)){
+            parent = (parent as BoxComponent|CarouselContainer|BubbleContainer).props.parentContainer;
+            depth++;
+        }
+        return depth;
+    }
     private resizeAndUpdateHeight() {
         this.totalAllocatedHeight = 0;
         const contentDoms = $(`#${this.id}`).children('.flex-box-content');
@@ -132,10 +148,24 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
             this.resizeAndUpdate();
     };
 
+    protected onDrop = (e: any) => {
+        const box = ComponentManager.getInstance().getClosestBoxComponent(this.id);
+        const droppedPalette = ComponentManager.getInstance().getDraggingPalette();
+        if (droppedPalette) {
+            console.log('palette ', droppedPalette, ' dropped on ', box);
+            this.addContent(droppedPalette.props.paletteDefinition.type as ComponentType);
+            ComponentManager.getInstance().clearDraggingPalette();
+        }
+    };
     private getSpacing() {
         return this.props.json.spacing || 'none';//((this.props.json.layout == 'horizontal' ? 'none':'md'));
     }
-
+    public onDropoverActive(){
+        $(`#${this.id}`).addClass('flex-dragged-over');
+    }
+    public onDropoverInactive(){
+        $(`#${this.id}`).removeClass('flex-dragged-over');
+    }
     private getTotalMarginPixel() {
         let totalMargin = 0;
         for (let content of this.props.json.contents) {
@@ -143,7 +173,13 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
         }
         return (this.props.json.contents.length - 1) * Utils.getMarginPixel(this.getSpacing());
     }
-
+    public addContent(type: ComponentType){
+        this.props.json.contents.push(ComponentManager.ComponentDefaultDefinitions[type] as any);
+        this.onJsonChanged();
+    }
+    public removeContent(index: number){
+        return this.props.json.contents.splice(index, 1);
+    }
     renderComponent() {
         // console.log("Available content width for ",this.props.json," is "+this.getAvailableContent()+' and zeroflex WidthOrHeight = '+this.totalAllocatedWidth);
         const layout = this.props.json.layout;
@@ -165,8 +201,8 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
                         this.props.height : this.getChildHeight(flex === undefined ? 0 : flex, key);
                     // console.log('dimension for ',contentJson,': w='+width+', h='+height);
 
-                    const component = ComponentFactory.createComponent(contentJson, width, height);
-                    return (<div key={key} id={key} className={`${componentClass}`}>{component}</div>);
+                    const component = ComponentFactory.createComponent(contentJson, width, height, this);
+                    return (<div key={key} id={key} data-index = {i} className={`${componentClass}`}>{component}</div>);
                 })}
             </div>
         );

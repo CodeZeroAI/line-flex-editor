@@ -2,14 +2,19 @@ import * as React from 'react';
 import {CarouselContainerJson} from "./Definitions";
 import {BubbleContainer} from "./BubbleContainer";
 import {BaseComponent} from "../components/BaseComponent";
+import {ComponentManager} from "../controllers/ComponentManager";
+import {FlexEditor} from "../FlexEditor";
 
 export class CarouselContainer extends BaseComponent<CarouselContainerJson> {
     private maxHeight = 0;
-
+    private bubbles : BubbleContainer[] = [];
     constructor(props: any) {
         super(props);
     }
 
+    protected renderEditor(): JSX.Element | null{
+        return null;
+    }
     private resizeAndUpdate() {
         const self = this;
         $(`#${this.id}`).find('.flex-bubble-container').each(function(){
@@ -37,8 +42,11 @@ export class CarouselContainer extends BaseComponent<CarouselContainerJson> {
             this.resizeAndUpdate();
     };
     generateBubbles = () => {
+        this.bubbles = [];
         return this.props.json.contents.map((bubbleJson, i) => {
-            return <BubbleContainer key={`bubble-${i}`} json={bubbleJson} width={300}
+            return <BubbleContainer key={`bubble-${i}`} json={bubbleJson}
+                                    width={300} ref={(comp)=>{if(comp)this.bubbles[i] = comp}}
+                                    parentContainer={this}
                                     height={this.maxHeight || 'auto'}/>
         })
     };
@@ -51,4 +59,9 @@ export class CarouselContainer extends BaseComponent<CarouselContainerJson> {
             </div>
         );
     }
+
+    onComponentClicked = (e: any) => {
+        ComponentManager.getInstance().setActiveComponent(this.bubbles[FlexEditor.getInstance().state.selectedIndex]);
+        e.stopPropagation();
+    };
 }

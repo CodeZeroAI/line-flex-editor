@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SizeWithoutFull, SpacerComponentJson} from "./Definitions";
+import {SpacerComponentJson} from "./Definitions";
 import {BaseComponent} from "./BaseComponent";
 import {DropdownSelector} from "../editors/DropdownSelector";
 import {Constant} from "../Utils";

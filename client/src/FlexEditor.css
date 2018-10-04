@@ -34,7 +34,6 @@ p{
 }
 .flex-editor-container{
     height:100vh;
-    padding: 20px;
     background: linear-gradient(90deg, #eeeeee 34px, transparent 1%) center, linear-gradient(#eeeeee 34px, transparent 1%) center, #d2d2d2;
     background-size: 36px 36px;
     text-align: center;

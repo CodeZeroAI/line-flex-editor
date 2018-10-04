@@ -1,11 +1,67 @@
-.flex-editor-top-nav{
+.flex-editor-top-nav {
     height: 60px;
     border-bottom: 2px solid #cccccc;
-    background: #eeeeee;
-    margin: -20px -20px 20px;
     vertical-align: middle;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-left: 20px;
+    padding: 0 15px;
+    background: #eee;
+}
+
+.flex-editor-top-nav-container {
+    padding: 0 25px;
+    background: #eeeeee;
+    width: 100vw;
+    margin: -20px -20px 0;
+}
+
+.flex-editor-top-nav .flex-tooltip-toggle {
+    padding: 0 15px;
+    border-radius: 10px;
+    height: 36px;
+    font-weight: bold;
+    text-transform: none;
+}
+
+.flex-editor-left-nav {
+    height: 100vh;
+    position: absolute;
+    width: 185px;
+    left: 0;
+    text-align: left;
+    padding: 20px 20px 20px 25px;
+    background: #eee;
+}
+
+.flex-editor-left-nav > span {
+    font-style: italic;
+    color: #888;
+    background: #EEEEEE;
+    padding: 5px;
+}
+.flex-palette{
+    padding-left: 5px;
+    margin-top: 10px;
+    color: #555;
+}
+.flex-palette>li{
+    margin-top:10px;
+}
+.flex-palette-item{
+    background: #EEEEEE;
+    border: 2px solid #CCC;
+    border-radius: 10px;
+    padding: 12px 0px;
+    font-weight: bold;
+    width: 130px;
+    font-size: 12px;
+}
+.flex-editor-top-nav>button {
+    font-weight: bold;
+    text-transform: none;
+    border-radius: 9px !important;
+    height: 35px;
+    padding: 0 15px;
+    border-width: 2px;
 }

@@ -12,55 +12,73 @@ export interface ActionProperty {
 
 export class ActionFactory {
 
-    // private static ACTION_LABEL_VALUE = {name: 'label', label: 'Label'};
+    private static ACTION_LABEL_VALUE = {name: 'label', label: 'Label'};
     public static ACTION_PROPERTIES: {
         [key: string]: ActionProperty
     } = {
         'message': {
             label: 'Message', icon: 'typography', values: [
+                ActionFactory.ACTION_LABEL_VALUE,
                 {label: 'Text', name: 'text'}
             ]
             , description: 'Send a text message'
         },
         'postback': {
             label: 'Postback', icon: 'wave', values: [
+                ActionFactory.ACTION_LABEL_VALUE,
                 {label: 'Text', name: 'displayText'}, {label: 'Data', name: 'data'}]
             , description: 'Display a text message and send postback data'
         },
         'uri': {
             label: 'Open website', icon: 'link', values: [
+                ActionFactory.ACTION_LABEL_VALUE,
                 {label: 'URL', name: 'uri'}]
             , description: 'Open a website using in-app browser'
         },
         'datetimepicker': {
-            label: 'Datetime picker', icon: 'calendar2', values: []
+            label: 'Datetime picker', icon: 'calendar2', values: [
+                ActionFactory.ACTION_LABEL_VALUE
+            ]
             , description: 'Open date and time picker'
         },
         'camera': {
-            label: 'Camera', icon: 'camera', values: [], uriPrefix: 'line://nv/camera/'
+            label: 'Camera', icon: 'camera', values: [
+                ActionFactory.ACTION_LABEL_VALUE
+            ], uriPrefix: 'line://nv/camera/'
             , description: 'Open camera'
         },
         'camera_roll': {
-            label: 'Image', icon: 'file-picture', values: [], uriPrefix: 'line://nv/cameraRoll/single'
+            label: 'Image', icon: 'file-picture', values: [
+                ActionFactory.ACTION_LABEL_VALUE
+            ], uriPrefix: 'line://nv/cameraRoll/single'
             , description: 'Open photo album. User can only select 1 photo from the album'
         },//, uriData: 'line://nv/cameraRoll/single'},
         'images': {
-            label: 'Multiple images', icon: 'stack-picture', values: [], uriPrefix: 'line://nv/cameraRoll/multi'
+            label: 'Multiple images', icon: 'stack-picture', values: [
+                ActionFactory.ACTION_LABEL_VALUE
+            ], uriPrefix: 'line://nv/cameraRoll/multi'
             , description: 'Open photo album. User can only select multiple photos from the album'
         },//, uriData: 'line://nv/cameraRoll/multi'},
         'location': {
-            label: 'Location', icon: 'location3', values: [], uriPrefix: 'line://nv/location/'
+            label: 'Location', icon: 'location3', values: [
+                ActionFactory.ACTION_LABEL_VALUE
+            ], uriPrefix: 'line://nv/location/'
             , description: 'Open map for the user to share location'
         },//, uriData: 'line://nv/location/'},
         'add': {
             label: 'Add friend', icon: 'user-plus', values: [
-                {label: 'Account ID', name: ':uri'}], uriPrefix: 'line://ti/p/'
+                ActionFactory.ACTION_LABEL_VALUE,
+                {label: 'Account ID', name: ':uri'}
+                ], uriPrefix: 'line://ti/p/'
             , description: 'Open an Add Friend screen of a specified account'
         },//, uriData: 'line://ti/p/:value', valueLabel: 'Account ID'},
         'share': {
             label: 'Share to friends',
             icon: 'share3',
-            values: [{label: 'Account ID', name: ':uri'}],
+            values: [
+                ActionFactory.ACTION_LABEL_VALUE,
+                {label: 'Account ID', name: ':uri'}
+                ],
             uriPrefix: 'line://nv/recommendOA/'
             ,
             description: 'Open a recommend screen that allows the user to share a specified account to his/her friends'
@@ -69,7 +87,10 @@ export class ActionFactory {
         },
         'liff': {
             label: 'Open Liff', icon: 'pyramid2',
-            values: [{label: 'App ID', name: ':uri'}],
+            values: [
+                ActionFactory.ACTION_LABEL_VALUE,
+                {label: 'App ID', name: ':uri'}
+                ],
             uriPrefix: 'line://app/'
             , description: 'Open a specified Liff App'
         }// uriData: 'line://app/:value', valueLabel: 'App ID'}

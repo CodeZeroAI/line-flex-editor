@@ -4,8 +4,17 @@
     background: white;
     border-radius: 17px;
     float: left;
-    margin-right: 20px;
+    margin: 20px 40px 40px;
     position: relative;
+}
+.flex-block:first-child{
+    border-top: none !important;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+}
+.flex-block:last-child{
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
 }
 .flex-carousel-container{
     display:inline-block;
@@ -344,4 +353,6 @@
 .flex-gravity-top{
     align-self: flex-start;
 }
-
+.flex-box-component.flex-dragged-over{
+    outline: 1px dashed #49b7ae;
+}
