@@ -184,7 +184,8 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
         // console.log("Available content width for ",this.props.json," is "+this.getAvailableContent()+' and zeroflex WidthOrHeight = '+this.totalAllocatedWidth);
         const layout = this.props.json.layout;
         return (
-            <div id={this.id} className={`flex-component flex-box-component row flex-box-layout-${layout}`}
+            <div id={this.id} className={`flex-component flex-box-component row flex-box-layout-${layout}
+                                        flex-box-content-count-${this.props.json.contents.length}`}
                  style={{height: this.props.height}}>
                 {this.props.json.contents.map((contentJson, i) => {
                     const key = this.id + "-c" + i;
@@ -202,7 +203,10 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
                     // console.log('dimension for ',contentJson,': w='+width+', h='+height);
 
                     const component = ComponentFactory.createComponent(contentJson, width, height, this);
-                    return (<div key={key} id={key} data-index = {i} className={`${componentClass}`}>{component}</div>);
+                    return (<div key={key} id={key} data-index = {i} className={`${componentClass}`} style = {{
+                        width:`${width}px`,
+                        height: `${height}px`
+                    }}>{component}</div>);
                 })}
             </div>
         );

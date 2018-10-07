@@ -29,7 +29,7 @@ export class ToggleButton extends Component<{
         if(this.props.defaultValue) btnClass += 'toggle-active';
         return (
             <button id={this.id} type="button" title={this.props.tooltip} className={btnClass} onClick={this.toggle}>
-                {this.props.icon ? <i className={`icon-${this.props.icon}`} /> : null}
+                {this.props.icon ? <i className={`icon-${this.props.icon} ${this.props.label ? 'position-left':''}`} /> : null}
                 {this.props.label}
             </button>
         );

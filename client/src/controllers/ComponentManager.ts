@@ -29,7 +29,7 @@ export class ComponentManager {
     };
     public static readonly ComponentDefaultDefinitions : {[key:string] : BaseComponentJson} = {
         'box':{ type: 'box' as ComponentType, contents: [
-                {type: 'text' as ComponentType, text:'Box'}
+                // {type: 'text' as ComponentType, text:'Box'}
             ], spacing: 'none' as Margin, layout:'vertical' as Layout} as BoxComponentJson,
         'image':{ type: 'image' as ComponentType, url: 'https://upload.convolab.ai/flex/placeholder.gif',
             aspectRatio: '1:1', aspectMode: 'cover', size: 'md' } as ImageComponentJson,

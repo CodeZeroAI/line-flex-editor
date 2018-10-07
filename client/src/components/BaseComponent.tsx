@@ -32,6 +32,9 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
         Constant.GRAVITY_TOP, Constant.GRAVITY_CENTER, Constant.GRAVITY_BOTTOM
     ];
 
+    public getComponentDom() {
+        return $(`#${this.id}`);
+    }
 
     protected onMarginChanged = (margin: Margin | 'parent') => {
         console.log('changing margin to ' + margin);
@@ -116,13 +119,13 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
             <div className="flex-tooltip-header">
                 <h6>{this.props.json.type} setting</h6>
                 {this.props.parentContainer instanceof BoxComponent ? [(
-                    <button title = 'Delete component'
-                            key = {this.id+'-delete-btn'}
+                    <button title='Delete component'
+                            key={this.id + '-delete-btn'}
                             className="btn btn-flat flex-tooltip-delete" onClick={this.delete}>
                         <i className="icon-trash"/>
                     </button>), (
                     <button title={'Select container box'}
-                            key = {this.id+'-select-box-btn'}
+                            key={this.id + '-select-box-btn'}
                             className="btn btn-flat flex-tooltip-select-parent" onClick={this.selectParent}>
                         <i className="icon-enlarge"/>
                     </button>
@@ -172,6 +175,16 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
                     </div>
                 </div>
                 <div className={'flex-tooltip-section'}>
+                    <label className={'flex-tooltip-label'}>Gravity</label>
+                    <div className={'flex-tooltip-entry'}>
+                        <DropdownSelector
+                            options={BaseComponent.GRAVITY_DROPDOWN_OPTIONS}
+                            defaultValue={json.gravity || 'top'}
+                            onChange={this.onGravityChanged}
+                        />
+                    </div>
+                </div>
+                <div className={'flex-tooltip-section'}>
                     <ActionSelector
                         json={json.action}
                         onActionUpdated={this.onActionChanged}
@@ -184,6 +197,10 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
         (this.props.json as ElementalComponentJson).action = actionJson;
     };
 
+    isOnActiveBubble() {
+        return this.getComponentDom().closest('.swiper-slide-active').length > 0;
+    }
+
     componentDidMount() {
         // console.log('binding click event for ',this);
         const dom = $(`#${this.id}`);
@@ -192,7 +209,7 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
         dom.on('mouseleave', this.onUnhover);
         tippy(document.querySelector(`#${this.id}`), {
             content: document.getElementById(`${this.id}-tooltip`),//ReactDOMServer.renderToStaticMarkup(this.getEditor()),
-            placement: 'right',
+            placement: 'right-end',
             arrow: true,
             distance: 20,
             theme: 'flex-tooltip',
@@ -244,7 +261,9 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
     }
 
     onComponentClicked = (e: any) => {
-        ComponentManager.getInstance().setActiveComponent(this);
-        e.stopPropagation();
+        if(this.isOnActiveBubble()){
+            ComponentManager.getInstance().setActiveComponent(this);
+            e.stopPropagation();
+        }
     };
 }

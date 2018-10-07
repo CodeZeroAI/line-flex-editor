@@ -1,7 +1,7 @@
 import {BoxComponent} from "./BoxComponent";
 import {CarouselContainer} from "../containers/CarouselContainer";
 import {BubbleContainer} from "../containers/BubbleContainer";
-import {FlexEditor} from "../FlexEditor";
+import {FlexVisualEditor} from "../FlexVisualEditor";
 
 export interface BaseComponentJson{
     type: ComponentType
@@ -24,7 +24,7 @@ export type Layout = 'horizontal' | 'vertical' | 'baseline'
 export type ComponentType = 'box'|'button'|'text'|'image'|'icon'|'filler'|'spacer'|'separator'|'bubble'|'carousel'
 export type AspectMode = 'cover'|'fit';
 export type IconAspectRatio = '1:1'|'2:1'|'3:1';
-export type ContainerComponent = BoxComponent | CarouselContainer | BubbleContainer | FlexEditor;
+export type ContainerComponent = BoxComponent | CarouselContainer | BubbleContainer | FlexVisualEditor;
 export interface BoxComponentJson extends ElementalComponentJson{
     type: 'box'
     layout: Layout

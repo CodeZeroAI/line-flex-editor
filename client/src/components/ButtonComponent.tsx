@@ -80,8 +80,8 @@ export class ButtonComponent extends BaseComponent<ButtonComponentJson> {
     private getContentStyle(){
         return {
             background: this.getBackgroundColor(),
-            width:this.props.width,
-            height: this.props.height
+            width:this.props.width
+            // height: this.props.height
         }
     }
     renderComponent() {

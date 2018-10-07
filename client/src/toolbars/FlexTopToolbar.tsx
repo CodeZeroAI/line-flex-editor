@@ -6,13 +6,13 @@ import {FlexEditor} from "../FlexEditor";
 import {BoxComponentJson, ImageComponentJson} from "../components/Definitions";
 
 export class FlexTopToolbar extends React.Component<{ json: BubbleContainerJson }, {}> {
-    private previousContent : {
+    private previousContent: {
         header?: BoxComponentJson,
         hero?: ImageComponentJson,
         body?: BoxComponentJson,
         footer?: BoxComponentJson
     } = {};
-    private previousStyle : {
+    private previousStyle: {
         header?: BlockStyleJson,
         hero?: BlockStyleJson,
         body?: BlockStyleJson,
@@ -35,9 +35,12 @@ export class FlexTopToolbar extends React.Component<{ json: BubbleContainerJson 
     onFooterTriggered = (shouldExist: boolean) => {
         this.onTriggered('footer', shouldExist)
     };
+    onJSONTriggered = (shouldShowJson: boolean) => {
+        FlexEditor.getInstance().setShouldShowJson(shouldShowJson);
+    };
     onTriggered = (part: 'header' | 'hero' | 'body' | 'footer', shouldExist: boolean) => {
         if (shouldExist && !this.props.json[part]) {
-            if (this.previousContent[part]){
+            if (this.previousContent[part]) {
                 this.props.json[part] = this.previousContent[part];
                 this.props.json.styles[part] = this.previousStyle[part] as BlockStyleJson;
             }
@@ -65,12 +68,22 @@ export class FlexTopToolbar extends React.Component<{ json: BubbleContainerJson 
         const hasHero = !!this.props.json.hero;
         const hasBody = !!this.props.json.body;
         const hasFooter = !!this.props.json.footer;
+        const isJsonMode = FlexEditor.getInstance().state.shouldShowJson;
         return (
             <div className="flex-editor-top-nav">
-                <ToggleButton label={'Header'} defaultValue={hasHeader} onChange={this.onHeaderTriggered}/>
-                <ToggleButton label={'Hero'} defaultValue={hasHero} onChange={this.onHeroTriggered}/>
-                <ToggleButton label={'Body'} defaultValue={hasBody} onChange={this.onBodyTriggered}/>
-                <ToggleButton label={'Footer'} defaultValue={hasFooter} onChange={this.onFooterTriggered}/>
+                {isJsonMode ? null: [
+                    <ToggleButton key = {'top-nav-toggle-header'} label={'Header'} defaultValue={hasHeader} onChange={this.onHeaderTriggered}/>,
+                    <ToggleButton key = {'top-nav-toggle-hero'} label={'Hero'} defaultValue={hasHero} onChange={this.onHeroTriggered}/>,
+                    <ToggleButton key = {'top-nav-toggle-body'} label={'Body'} defaultValue={hasBody} onChange={this.onBodyTriggered}/>,
+                    <ToggleButton key = {'top-nav-toggle-footer'} label={'Footer'} defaultValue={hasFooter} onChange={this.onFooterTriggered}/>
+                ]}
+                <div style={{position: 'absolute', 'right': '10px'}}>
+                    <ToggleButton icon={'code'}
+                                  label={'JSON'}
+                                  defaultValue={FlexEditor.getInstance().state.shouldShowJson}
+                                  onChange={this.onJSONTriggered}
+                    />
+                </div>
             </div>
         );
     }

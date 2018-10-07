@@ -31,7 +31,7 @@ export class BubbleContainer extends BaseComponent<BubbleContainerJson> {
         if(!json.styles.footer) json.styles.footer = {};
     };
     private calculateBodyHeight() {
-        if (this.props.height == 'auto' || this.needResize) return 'auto';
+        if (this.props.height == 'auto') return 'auto';
         const h = (this.props.height - this.getNonBodyHeight());
         const topMargin = 20;
         const bottomMargin = this.props.json.footer ? 20 : 10;
@@ -65,6 +65,7 @@ export class BubbleContainer extends BaseComponent<BubbleContainerJson> {
     };
 
     renderComponent() {
+        console.log("rendering bubble with height "+this.props.height+" and needResize: "+this.needResize);
         const width = this.props.width as number;
         let hasClass = '';
         if (this.props.json.header) hasClass += 'has-header ';

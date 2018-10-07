@@ -25,13 +25,15 @@
 }
 
 .flex-editor-left-nav {
-    height: 100vh;
     position: absolute;
     width: 185px;
     left: 0;
     text-align: left;
     padding: 20px 20px 20px 25px;
     background: #eee;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
 }
 
 .flex-editor-left-nav > span {
@@ -57,7 +59,7 @@
     width: 130px;
     font-size: 12px;
 }
-.flex-editor-top-nav>button {
+.flex-editor-top-nav button {
     font-weight: bold;
     text-transform: none;
     border-radius: 9px !important;
