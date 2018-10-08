@@ -57,7 +57,7 @@ export class CarouselContainer extends BaseComponent<CarouselContainerJson> {
             initialSlide: index,
             loop: false,
             centeredSlides: true,
-            slidesPerView: 4,
+            slidesPerView: 2,
             keyboardControl: true,
             mousewheelControl: true,
             lazyLoading: true,
@@ -76,14 +76,6 @@ export class CarouselContainer extends BaseComponent<CarouselContainerJson> {
                 // when window width is <= 800px
                 800: {
                     slidesPerView: 1
-                },
-                // when window width is <= 1280px
-                1280: {
-                    slidesPerView: 2
-                },
-                // when window width is <= 1280px
-                1400: {
-                    slidesPerView: 3
                 }
             }
         });

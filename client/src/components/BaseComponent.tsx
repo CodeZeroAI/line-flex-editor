@@ -209,7 +209,7 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
         dom.on('mouseleave', this.onUnhover);
         tippy(document.querySelector(`#${this.id}`), {
             content: document.getElementById(`${this.id}-tooltip`),//ReactDOMServer.renderToStaticMarkup(this.getEditor()),
-            placement: 'right-end',
+            placement: 'left-end',
             arrow: true,
             distance: 20,
             theme: 'flex-tooltip',

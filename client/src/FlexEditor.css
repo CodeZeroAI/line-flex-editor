@@ -5,6 +5,7 @@ body{
     font-size: 16px;
     -webkit-user-select: none;
     -webkit-text-size-adjust: none;
+    background: #ddd;
 }
 p{
     margin:0;
@@ -51,4 +52,12 @@ p{
     position: absolute;
     top: 60px;
     z-index: 999999;
+}
+
+#root {
+    max-width: 970px;
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 2px 20px rgba(132,146,166,.25)!important;
+    border: 1px solid #ddd;
 }
