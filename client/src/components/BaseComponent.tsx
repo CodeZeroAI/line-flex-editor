@@ -59,7 +59,7 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
         else {
             delete json.flex;
         }
-        this.onJsonChanged();
+        this.onJsonChanged(true);
     };
 
     public onInactive() {
@@ -195,8 +195,8 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
     };
     onActionChanged = (actionJson: ActionJson) => {
         (this.props.json as ElementalComponentJson).action = actionJson;
+        this.onJsonChanged(true);
     };
-
     isOnActiveBubble() {
         return this.getComponentDom().closest('.swiper-slide-active').length > 0;
     }
@@ -219,9 +219,8 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
 
     }
 
-    onJsonChanged = () => {
-        console.log('json is ', this.props.json);
-        FlexEditor.getInstance().onJsonChanged();
+    onJsonChanged = (wait = false) => {
+        FlexEditor.getInstance().onJsonChanged(wait);
     };
 
     private allowDrop(ev: any) {
@@ -259,11 +258,18 @@ export abstract class BaseComponent<T extends BaseComponentJson> extends React.C
             </div>
         )
     }
-
+    public getBubbleIndex = ()=>{
+        return $(`#${this.id}`).closest('.swiper-slide').index();
+    };
     onComponentClicked = (e: any) => {
         if(this.isOnActiveBubble()){
             ComponentManager.getInstance().setActiveComponent(this);
-            e.stopPropagation();
         }
+        else{
+            FlexEditor.getInstance().getVisualEditor().getCaourselComponent().selectBubbleWithIndex(
+                this.getBubbleIndex()
+            );
+        }
+        e.stopPropagation();
     };
 }

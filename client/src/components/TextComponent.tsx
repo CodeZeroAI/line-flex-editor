@@ -110,7 +110,7 @@ export class TextComponent extends BaseComponent<TextComponentJson> {
         if (maxLines || maxLines === 0) {
             console.log('changing max lines to ' + maxLines);
             this.props.json.maxLines = maxLines;
-            this.onJsonChanged();
+            this.onJsonChanged(true);
         }
         $(`#${this.id}-edit-lines`).val(this.props.json.maxLines + '');
     };
@@ -137,7 +137,7 @@ export class TextComponent extends BaseComponent<TextComponentJson> {
     };
     onTextChanged = () => {
         this.props.json.text = $(`#${this.id}-edit-text`).val() as string;
-        this.onJsonChanged();
+        this.onJsonChanged(true);
     };
 
     protected onTextAlignChanged = (align: Align) => {

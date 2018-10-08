@@ -17,6 +17,7 @@ export class ActionSelector extends Component<{
 
 
     refreshValueInputs = () => {
+        const action = ActionFactory.parseActionJson(this.props.json);
         const type = this.actionTypeDropdown.getCurrentValue();
         const prop = JSON.parse(JSON.stringify(ActionFactory.ACTION_PROPERTIES[type]));
         // if(this.props.noLabel) prop.unshift();
@@ -24,7 +25,7 @@ export class ActionSelector extends Component<{
             const valueProp = prop.values[i-1];
             if (valueProp) {
                 $(`#${this.id}-value-label-${i}`).text(valueProp.label).show();
-                $(`#${this.id}-value-input-${i}`).val('').show();
+                $(`#${this.id}-value-input-${i}`).val(action.values[i]).show();
             }
             else {
                 $(`#${this.id}-value-label-${i}`).hide();
@@ -41,12 +42,11 @@ export class ActionSelector extends Component<{
     onValueChanged = () => {
         const values: string[] = [];
         for (let i = 1; i <= 3; i++) {
-            values.push($(`#${this.id}-value-input-${i}`).val() as string);
+            values.push($(`#${this.id}-value-input-${i}>input`).val() as string);
         }
         const type = this.actionTypeDropdown.getCurrentValue();
         const actionJson = ActionFactory.getActionJson(type, values);
         this.props.onActionUpdated(actionJson);
-        this.refreshValueInputs();
     };
 
     render() {
@@ -72,7 +72,7 @@ export class ActionSelector extends Component<{
                                className="flex-tooltip-text-input flex-tooltip-entry flex-tooltip-input"
                                type="text"
                                onChange={this.onValueChanged}
-                               defaultValue={action.value || ''}/>
+                               defaultValue={action.values[0] || ''}/>
                     </div>
                     <label id={this.id + '-value-label-2'} className={'flex-tooltip-label mt-10'}> Val2</label>
                     <div id={this.id + '-value-input-2'} className={'flex-tooltip-entry'}>
@@ -80,7 +80,7 @@ export class ActionSelector extends Component<{
                                className="flex-tooltip-text-input flex-tooltip-entry flex-tooltip-input"
                                type="text"
                                onChange={this.onValueChanged}
-                               defaultValue={action.value || ''}/>
+                               defaultValue={action.values[1]|| ''}/>
                     </div>
                     <label id={this.id + '-value-label-3'} className={'flex-tooltip-label mt-10'}> Val3</label>
                     <div id={this.id + '-value-input-3'} className={'flex-tooltip-entry'}>
@@ -88,7 +88,7 @@ export class ActionSelector extends Component<{
                                className="flex-tooltip-text-input flex-tooltip-entry flex-tooltip-input"
                                type="text"
                                onChange={this.onValueChanged}
-                               defaultValue={action.value || ''}/>
+                               defaultValue={action.values[2] || ''}/>
                     </div>
                 </div>
             </div>

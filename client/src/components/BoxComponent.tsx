@@ -5,9 +5,9 @@ import {Constant, Utils} from "../Utils";
 import {BaseComponent} from "./BaseComponent";
 import {DropdownSelector} from "../editors/DropdownSelector";
 import {ComponentManager} from "../controllers/ComponentManager";
-import {FlexEditor} from "../FlexEditor";
 import {CarouselContainer} from "../containers/CarouselContainer";
 import {BubbleContainer} from "../containers/BubbleContainer";
+import {FlexVisualEditor} from "../FlexVisualEditor";
 
 export class BoxComponent extends BaseComponent<BoxComponentJson> {
     public static readonly BOX_LAYOUT_DROPDOWN = [
@@ -108,7 +108,7 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
     public getComponentDepth(){
         let depth = 0;
         let parent = this.props.parentContainer;
-        while(!(parent instanceof FlexEditor)){
+        while(!(parent instanceof FlexVisualEditor)){
             parent = (parent as BoxComponent|CarouselContainer|BubbleContainer).props.parentContainer;
             depth++;
         }
@@ -204,8 +204,8 @@ export class BoxComponent extends BaseComponent<BoxComponentJson> {
 
                     const component = ComponentFactory.createComponent(contentJson, width, height, this);
                     return (<div key={key} id={key} data-index = {i} className={`${componentClass}`} style = {{
-                        width:`${width}px`,
-                        height: `${height}px`
+                        width: width == 'auto' ? width: `${width}px`,
+                        height: height == 'auto' ? height: `${height}px`
                     }}>{component}</div>);
                 })}
             </div>

@@ -9,6 +9,7 @@ import {
     Margin, SpacerComponentJson,
     TextComponentJson
 } from "../components/Definitions";
+import {BubbleContainerJson} from "../containers/Definitions";
 
 export interface ComponentPaletteDefinition {
     icon: string,
@@ -33,12 +34,17 @@ export class ComponentManager {
             ], spacing: 'none' as Margin, layout:'vertical' as Layout} as BoxComponentJson,
         'image':{ type: 'image' as ComponentType, url: 'https://upload.convolab.ai/flex/placeholder.gif',
             aspectRatio: '1:1', aspectMode: 'cover', size: 'md' } as ImageComponentJson,
-        'icon':{ type: 'icon' as ComponentType, url: ''} as IconComponentJson,
+        'icon':{ type: 'icon' as ComponentType, url: 'https://upload.convolab.ai/flex/placeholder.gif'} as IconComponentJson,
         'text': {type: 'text' as ComponentType, text:'Text'} as TextComponentJson,
         'filler': {type: 'filler' as ComponentType} as FillerComponentJson,
         'spacer': {type: 'spacer' as ComponentType} as SpacerComponentJson,
         'separator': {type: 'separator' as ComponentType} as SpacerComponentJson,
         'button':{type:'button' as ComponentType, action: {label: 'Button', value: '', type: 'message'}} as ButtonComponentJson
+    };
+    private static readonly DefaultBubbleJson = {
+        'bubble':{
+            type:'bubble', body:ComponentManager.ComponentDefaultDefinitions['box']
+        } as BubbleContainerJson
     };
     private static instance: ComponentManager;
 
@@ -54,7 +60,9 @@ export class ComponentManager {
 
     constructor() {
     }
-
+    public getNewBubbleJson(){
+        return JSON.parse(JSON.stringify(ComponentManager.DefaultBubbleJson));
+    }
     public getComponentById(id: string) {
         return this.components[id];
     }
@@ -117,6 +125,8 @@ export class ComponentManager {
                 currentDepth = thisDepth;
             }
         }
+
+        // console.log("Refreshing hover...target: ",this.hoveredBox);
         // If target has changed, deactivate previous one
         if(this.hoveredBox && (!target || this.hoveredBox.id != target.id))
             this.hoveredBox.onDropoverInactive();

@@ -96,29 +96,34 @@ export class ActionFactory {
         }// uriData: 'line://app/:value', valueLabel: 'App ID'}
     };
 
-    public static parseActionJson(actionJson?: ActionJson): { type: string, value: string | null } {
+    public static parseActionJson(actionJson?: ActionJson): { type: string, values: string[] } {
         if (!actionJson) {
-            return {value: '', type: 'message'};
+            return {values: [''], type: 'message'};
         }
         if (actionJson.type == 'uri') {
             for (let actionType in this.ACTION_PROPERTIES) {
                 const property = this.ACTION_PROPERTIES[actionType];
-                if (property.uriPrefix) {
+                if (property.uriPrefix && actionJson.uri && actionJson.uri.startsWith(property.uriPrefix)) {
                     return {
                         type: actionType,
-                        value: actionJson.data ? actionJson.data.replace(property.uriPrefix, '') : null
+                        values: [actionJson.label, (actionJson.uri ? actionJson.uri.replace(property.uriPrefix, '') : '')]
                     }
                 }
 
             }
             return {
-                type: 'uri', value: actionJson.data || null
+                type: 'uri', values: [actionJson.label, actionJson.uri || '']
             }
         }
-        return {
-            type: actionJson.type,
-            value: actionJson.data || null
+        const props = this.ACTION_PROPERTIES[actionJson.type];
+        if(props){
+            const ret = {type: actionJson.type, values:[] as any[]};
+            for(let valueDefinition of props.values){
+                ret.values.push(actionJson[valueDefinition.name] as any);
+            }
+            return ret;
         }
+        throw new Error('Unknown action type of json: '+JSON.stringify(actionJson));
     }
 
     public static getActionDropdownSelector() {
@@ -134,15 +139,14 @@ export class ActionFactory {
 
     public static getActionJson(type: string, values: string[]): ActionJson {
         const property = this.ACTION_PROPERTIES[type];
-        const label = values.splice(0, 1)[0];
         if (property.uriPrefix) {
+            const label = values.splice(0, 1)[0];
             return {
                 type: 'uri', uri: property.uriPrefix + values.join(','), label: label
             }
         }
         const ret: any = {};
         ret.type = type;
-        ret.label = label;
         for (let i in property.values) {
             const valueProperty = property.values[i];
             ret[valueProperty.name] = values[i];

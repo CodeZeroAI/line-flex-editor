@@ -19,7 +19,7 @@ export class FlexEditor extends React.Component<{}, FlexEditorProp> {
     private history: FlexEditorProp[] = [];
     private codeEditor: FlexCodeEditor;
     private visualEditor: FlexVisualEditor;
-
+    topToolbar : FlexTopToolbar;
     public getCodeEditor() {
         return this.codeEditor;
     }
@@ -52,7 +52,16 @@ export class FlexEditor extends React.Component<{}, FlexEditorProp> {
     setJson = (json : CarouselContainerJson)=>{
         this.setState({json});
     };
-    onJsonChanged() {
+    private scheduleId : number;
+    onJsonChanged(wait: boolean = false) {
+        const scheduleId = this.scheduleId = Date.now();
+        if(wait) setTimeout(()=>{
+            if(this.scheduleId != scheduleId) return;
+            this.doJSONChanged();
+        },1000);
+        else this.doJSONChanged();
+    }
+    private doJSONChanged(){
         console.log('JSON: ', this.state);
         this.history.push(JSON.parse(JSON.stringify(this.state)));
         ComponentManager.getInstance().markAllComponentsNeedResize();
@@ -74,14 +83,15 @@ export class FlexEditor extends React.Component<{}, FlexEditorProp> {
     protected onDragOver = () => {
         ComponentManager.getInstance().refreshHoveredBoxComponent();
     };
-
     render() {
         return (
             <div id='flex-editor-container'
                  className={`flex-editor-container ${this.state.shouldShowJson ? 'json-mode' : ''}`}
                  onDragOverCapture={this.onDragOver}
             >
-                <FlexTopToolbar json={this.getActiveBubble()}/>
+                <FlexTopToolbar ref={(topToolbar) => {
+                    this.topToolbar = topToolbar as FlexTopToolbar
+                }} />
                 <FlexVisualEditor key = {'flex-visual-editor'} json = {this.state.json} ref={(editor) => {
                     this.visualEditor = editor as FlexVisualEditor
                 }} />
