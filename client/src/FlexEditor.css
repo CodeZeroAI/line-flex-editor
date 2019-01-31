@@ -34,7 +34,7 @@ p{
     list-style: none;
 }
 .flex-editor-container{
-    background: linear-gradient(90deg, #eeeeee 34px, transparent 1%) center, linear-gradient(#eeeeee 34px, transparent 1%) center, #d2d2d2;
+    background: linear-gradient(90deg, white 34px, transparent 1%) center, linear-gradient(white 34px, transparent 1%) center, #d2d2d2;
     background-size: 36px 36px;
     text-align: center;
 }

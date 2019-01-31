@@ -6,6 +6,9 @@
     float: left;
     margin: 20px 40px 40px;
     position: relative;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.28);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.28);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.28);
 }
 .flex-block:first-child{
     border-top: none !important;
@@ -422,4 +425,7 @@
 }
 .swiper-pagination:not(.full)>.swiper-pagination-bullet:last-child{
     display: none !important;
+}
+.flex-bubble-container{
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.28);
 }

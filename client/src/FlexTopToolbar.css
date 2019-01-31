@@ -11,7 +11,7 @@
 
 .flex-editor-top-nav-container {
     padding: 0 25px;
-    background: #eeeeee;
+    background: white;
     width: 100vw;
     margin: -20px -20px 0;
 }
@@ -39,7 +39,7 @@
 .flex-editor-left-nav > span {
     font-style: italic;
     color: #888;
-    background: #EEEEEE;
+    background: white;
     padding: 5px;
 }
 .flex-palette{
@@ -51,7 +51,7 @@
     margin-top:10px;
 }
 .flex-palette-item{
-    background: #EEEEEE;
+    background: white;
     border: 2px solid #CCC;
     border-radius: 10px;
     padding: 12px 0px;

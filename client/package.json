@@ -6,13 +6,11 @@
     "build": "webpack"
   },
   "dependencies": {
-    "@types/fabric": "^1.5.42",
     "@types/popper.js": "^1.11.0",
-    "fabric": "^2.3.6",
     "popper.js": "^1.14.4",
+    "tippy.js": "^3.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "tippy.js": "^3.0.1"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.1",
